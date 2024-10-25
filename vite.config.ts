@@ -6,7 +6,7 @@ import externalize from "vite-plugin-externalize-dependencies";
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    minify: false,
+    minify: true,
     outDir: "dist",
     assetsDir: "assets",
     rollupOptions: {

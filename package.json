@@ -1,14 +1,17 @@
 {
   "name": "@vixen-js/core-react",
-  "private": true,
+  "private": false,
   "version": "0.1.0",
   "description": "Vixen UI Core React Package to create Desktop apps using react.js",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
   ],
   "author": "Seobryn <ing.jose.joya@gmail.com>",
-  "main": "dist/main.js",
+  "main": "dist/main.cjs",
   "typings": "dist/main.d.ts",
   "scripts": {
     "dev": "qode ./dist/demo.cjs",
