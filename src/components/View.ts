@@ -12,8 +12,10 @@ import {
   QDialog
 } from "@vixen-js/core";
 import { NativeRawPointer } from "@vixen-js/core/dist/lib/core/Component";
-import { VWidget, VProps } from "./Config";
+import { VWidget, VProps, ComponentConfig, registerComponent } from "./Config";
 import { addNewEventListeners, cleanEventListenerMap } from "../utils/helpers";
+import { AppContainer } from "../reconciler";
+import { Fiber } from "react-reconciler";
 
 type Size = {
   width: number;
@@ -172,7 +174,7 @@ export function setViewProps<Signals extends object>(
   Object.assign(setter, newProps);
 }
 
-export class View extends QWidget implements VWidget {
+export class VView extends QWidget implements VWidget {
   static tagName = "view";
 
   private _layout: QLayout<QObjectSignals> | null = null;
@@ -228,3 +230,42 @@ export class View extends QWidget implements VWidget {
     child.close();
   }
 }
+
+class ViewConfig extends ComponentConfig {
+  tagName = VView.tagName;
+  shouldSetTextContent() {
+    return false;
+  }
+  createInstance(
+    newProps: ViewProps<QWidgetSignals>,
+    _root: AppContainer,
+    _context: any,
+    _workInProgress: Fiber
+  ): VView {
+    const widget = new VView();
+    widget.setProps(newProps, {});
+    return widget;
+  }
+  commitMount(
+    instance: VView,
+    newProps: ViewProps<QWidgetSignals>,
+    _internalInstanceHandle: any
+  ): void {
+    if (newProps.visible !== false) {
+      instance.show();
+    }
+    return;
+  }
+  commitUpdate(
+    instance: VView,
+    _updatePayload: any,
+    oldProps: ViewProps<QWidgetSignals>,
+    newProps: ViewProps<QWidgetSignals>
+  ): void {
+    instance.setProps(newProps, oldProps);
+  }
+}
+
+export const View = registerComponent<ViewProps<QWidgetSignals>>(
+  new ViewConfig()
+);

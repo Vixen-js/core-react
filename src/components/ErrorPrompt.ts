@@ -32,7 +32,7 @@ const setErrorPromptProps = (
 
 export class VErrorPrompt extends QErrorMessage implements VWidget {
   static tagName = "error-prompt";
-  setProps(newProps: VProps, oldProps: VProps): void {
+  setProps(newProps: ErrorPromptProps, oldProps: ErrorPromptProps): void {
     setErrorPromptProps(this, newProps, oldProps);
   }
 
@@ -59,13 +59,13 @@ class ErrorPromptConfig extends ComponentConfig {
     return false;
   }
   createInstance(
-    props: VProps,
+    props: ErrorPromptProps,
     _root: AppContainer,
     _context?: any,
     _worInProgress?: Fiber
   ): VComponent {
     const widget = new VErrorPrompt();
-    widget.setProps(props, {});
+    widget.setProps(props, {} as any);
     return widget;
   }
   commitMount(
