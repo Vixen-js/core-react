@@ -1,0 +1,58 @@
+{
+  "name": "@vixen-js/core-react",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Vixen UI Core React Package to create Desktop apps using react.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "author": "Seobryn <ing.jose.joya@gmail.com>",
+  "main": "dist/main.js",
+  "typings": "dist/main.d.ts",
+  "scripts": {
+    "dev": "qode --watch ./dist/demo.js",
+    "watch": "pnpm build --watch",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "@types/node": "^22.7.9",
+    "@types/react": "^18.3.10",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.7.0",
+    "vite": "^5.4.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vixen-js/core-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vixen-js/core-react/issues"
+  },
+  "homepage": "https://github.com/vixen-js/core-react#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@types/react-reconciler": "^0.28.8",
+    "@vixen-js/core": "^0.1.0",
+    "react-deep-force-update": "^2.1.3",
+    "react-proxy": "^1.1.8",
+    "react-reconciler": "^0.29.2"
+  }
+}
