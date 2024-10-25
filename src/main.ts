@@ -30,3 +30,5 @@ export {
 } from "./components/AnimatedImage";
 export { type BoxViewProps, BoxView } from "./components/BoxView";
 export { View, type ViewProps } from "./components/View";
+
+export { Renderer } from "./renderer";
