@@ -11,14 +11,20 @@
   "main": "dist/main.js",
   "typings": "dist/main.d.ts",
   "scripts": {
-    "dev": "qode --watch ./dist/demo.js",
+    "dev": "qode ./dist/demo.cjs",
     "watch": "pnpm build --watch",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "tsc && vite build",
+    "lint": "eslint ."
   },
   "peerDependencies": {
     "react": "^18.3.1"
+  },
+  "dependencies": {
+    "@types/react-reconciler": "^0.28.8",
+    "@vixen-js/core": "^0.1.0",
+    "react-deep-force-update": "^2.1.3",
+    "react-proxy": "^1.1.8",
+    "react-reconciler": "^0.29.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
@@ -34,8 +40,9 @@
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.7.0",
-    "vite": "^5.4.8"
+    "typescript-eslint": "^8.10.0",
+    "vite": "^5.4.8",
+    "vite-plugin-externalize-dependencies": "^1.0.1"
   },
   "repository": {
     "type": "git",
@@ -47,12 +54,5 @@
   "homepage": "https://github.com/vixen-js/core-react#readme",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@types/react-reconciler": "^0.28.8",
-    "@vixen-js/core": "^0.1.0",
-    "react-deep-force-update": "^2.1.3",
-    "react-proxy": "^1.1.8",
-    "react-reconciler": "^0.29.2"
   }
 }

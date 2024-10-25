@@ -1,11 +1,8 @@
-import Reconciler from "react-reconciler";
+import Reconciler, { HostConfig } from "react-reconciler";
+import { DefaultEventPriority } from "react-reconciler/constants";
 import { QWidget, QSystemTrayIcon, QObject } from "@vixen-js/core";
-import {
-  getComponentByTagName,
-  VProps,
-  VComponent,
-  VWidget
-} from "./components/Config";
+import { getComponentByTagName, VComponent } from "./components/Config";
+import { VWidget } from "./components/Config";
 
 export type AppContainer = Set<QWidget<any>>;
 export const appContainer: AppContainer = new Set<QWidget>();
@@ -14,67 +11,97 @@ export type Ctx = {
   name: string;
 };
 
+type Type = string;
+type Props = { [key: string]: any };
+type Container = AppContainer;
+type Instance = VComponent;
+type TextInstance = any;
+type SuspenseInstance = any;
+type HydratableInstance = any;
+type PublicInstance = any;
+type HostContext = Ctx;
+type UpdatePayload = any;
+type _ChildSet = any;
+type TimeoutHandle = any;
+type NoTimeout = -1;
+
 const shouldIgnoreChild = (child: QObject<any>) =>
   child instanceof QSystemTrayIcon;
 
-const HostConfig: Reconciler.HostConfig<
-  string,
-  VProps,
-  AppContainer,
-  VComponent,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any
+const hostConfig: HostConfig<
+  Type,
+  Props,
+  Container,
+  Instance,
+  TextInstance,
+  SuspenseInstance,
+  HydratableInstance,
+  PublicInstance,
+  HostContext,
+  UpdatePayload,
+  _ChildSet,
+  TimeoutHandle,
+  NoTimeout
 > = {
-  getRootHostContext(/* nextRootInstance */): Ctx {
-    const context: Ctx = {
+  scheduleTimeout: setTimeout,
+  cancelTimeout: clearTimeout,
+  noTimeout: -1,
+  isPrimaryRenderer: true,
+  createInstance(
+    type: Type,
+    newProps: Props,
+    rootContainer: Container,
+    ctx: HostContext,
+    internalHandle: any
+  ) {
+    const { createInstance } = getComponentByTagName(type);
+    return createInstance(newProps, rootContainer, ctx, internalHandle);
+  },
+  createTextInstance(
+    _text: string,
+    _root: Container,
+    _ctx: HostContext,
+    _internalHandle: any
+  ) {
+    console.warn("Can't create text without <Text /> element.");
+  },
+  shouldSetTextContent(type, props) {
+    const { shouldSetTextContent } = getComponentByTagName(type);
+    return shouldSetTextContent(props);
+  },
+  getChildHostContext(parentHostContext, type, rootContainer) {
+    const { getCtx } = getComponentByTagName(type);
+    return getCtx(parentHostContext, rootContainer);
+  },
+  getRootHostContext(_rootContext) {
+    const ctx: Ctx = {
       name: "root"
     };
-    return context;
-  },
-  getChildHostContext(parentCtx, fiberType, nextRootInstance): Ctx {
-    const { getCtx } = getComponentByTagName(fiberType);
-    return getCtx(parentCtx, nextRootInstance);
-  },
-  shouldSetTextContent(type, nextProps) {
-    const { shouldSetTextContent } = getComponentByTagName(type);
-    return shouldSetTextContent(nextProps);
-  },
-  createTextInstance(newText) {
-    console.warn(
-      `Atempt to create a text instance, ${newText} Use <Text /> component instead`
-    );
-  },
-  createInstance(type, newProps, root, ctx, workInProgress) {
-    const { createInstance } = getComponentByTagName(type);
-    return createInstance(newProps, root, ctx, workInProgress);
+    return ctx;
   },
   appendInitialChild(parent: VWidget, child: QWidget<any>) {
     if (shouldIgnoreChild(child)) return;
+
     parent.appendInitialChild(child);
   },
-  finalizeInitialChildren(instance, type, newProps, root, ctx) {
+  finalizeInitialChildren(instance, type, newProps, rootInstance, ctx) {
     const { finalizeInitialChildren } = getComponentByTagName(type);
-    return finalizeInitialChildren(instance, newProps, root, ctx);
+    return finalizeInitialChildren(instance, newProps, rootInstance, ctx);
   },
-  prepareForCommit(/*rootNode*/) {
+  prepareForCommit() {
     return null;
   },
-  resetAfterCommit(/*rootNode*/) {},
-  commitMount(instance, type, newProps, internalInstanceHandle) {
-    const { commitMount } = getComponentByTagName(type);
-    return commitMount(instance, newProps, internalInstanceHandle);
+  resetAfterCommit() {
+    return;
   },
-  appendChildToContainer(container, child: QWidget<any>) {
+  commitMount(instance, type, newProps, internalHandle) {
+    const { commitMount } = getComponentByTagName(type);
+    return commitMount(instance, newProps, internalHandle);
+  },
+  appendChildToContainer(container, child) {
     container.add(child);
   },
-  insertInContainerBefore(container, child) {
+  insertInContainerBefore(container, child, _beforeChild) {
     container.add(child);
   },
   removeChildFromContainer(container, child) {
@@ -83,41 +110,36 @@ const HostConfig: Reconciler.HostConfig<
       child.close();
     }
   },
-  prepareUpdate(instance, type, oldProps, newProps, root, hostCtx) {
+  prepareUpdate(instance, type, oldProps, newProps, rootInstance, ctx) {
     const { prepareUpdate } = getComponentByTagName(type);
-    return prepareUpdate(instance, oldProps, newProps, root, hostCtx);
+    return prepareUpdate(instance, oldProps, newProps, rootInstance, ctx);
   },
   commitUpdate(
     instance,
     updatePayload,
     type,
-    prevProps,
-    nextProps,
-    internalHandle
+    oldProps,
+    newProps,
+    finishedWork
   ) {
     const { commitUpdate } = getComponentByTagName(type);
     return commitUpdate(
       instance,
       updatePayload,
-      prevProps,
-      nextProps,
-      internalHandle
+      oldProps,
+      newProps,
+      finishedWork
     );
   },
-  appendChild(parent: VWidget, child: QWidget<any>) {
+  appendChild(parent, child) {
     if (shouldIgnoreChild(child)) return;
     parent.appendChild(child);
   },
-  insertBefore(
-    parent: VWidget,
-    child: QWidget<any>,
-    beforeChild: QWidget<any>
-  ) {
+  insertBefore(parent, child, beforeChild) {
     if (shouldIgnoreChild(child)) return;
-
     parent.insertBefore(child, beforeChild);
   },
-  removeChild(parent: VWidget, child: QWidget<any>) {
+  removeChild(parent, child) {
     if (!shouldIgnoreChild(child)) {
       parent.removeChild(child);
     }
@@ -125,11 +147,11 @@ const HostConfig: Reconciler.HostConfig<
       child.close();
     }
   },
-  commitTextUpdate() {
-    console.warn("Atempt to update a text instance which is not supported");
+  commitTextUpdate(_textInstance, _oldText, _newText) {
+    console.warn("Can't update text without <Text /> element.");
   },
-  resetTextContent() {
-    console.warn("resetTextContent triggered");
+  resetTextContent(_instance) {
+    console.warn("Can't reset text without <Text /> element.");
   },
   supportsMutation: true,
   supportsPersistence: false,
@@ -137,48 +159,48 @@ const HostConfig: Reconciler.HostConfig<
   getPublicInstance(instance) {
     return instance;
   },
-  hideInstance(instance: any) {
+  hideInstance(instance: VWidget) {
     instance.hide();
   },
-  unhideInstance(instance: any) {
+  unhideInstance(instance: VWidget) {
     instance.show();
   },
-  hideTextInstance() {
-    console.warn("Atempt to hide a text instance which is not supported");
+  hideTextInstance(_textInstance) {
+    console.warn("Can't hide text without <Text /> element.");
   },
-  unhideTextInstance: () => {
-    console.warn("Atempt to unhide a text instance which is not supported");
+  unhideTextInstance(_textInstance) {
+    console.warn("Can't unhide text without <Text /> element.");
   },
-  scheduleTimeout: setTimeout,
-  cancelTimeout: clearTimeout,
-  noTimeout: -1,
-  isPrimaryRenderer: true,
-  preparePortalMount: function (_containerInfo: AppContainer): void {
-    throw new Error("Function not implemented.");
+  preparePortalMount(_containerInfo) {
+    return;
   },
-  getCurrentEventPriority: function (): Reconciler.Lane {
-    throw new Error("Function not implemented.");
+  getCurrentEventPriority() {
+    return DefaultEventPriority;
   },
-  getInstanceFromNode: function (
-    _node: any
-  ): Reconciler.Fiber | null | undefined {
-    throw new Error("Function not implemented.");
+  getInstanceFromNode(node) {
+    return node;
   },
-  beforeActiveInstanceBlur: function (): void {
-    throw new Error("Function not implemented.");
+  beforeActiveInstanceBlur() {
+    return;
   },
-  afterActiveInstanceBlur: function (): void {
-    throw new Error("Function not implemented.");
+  afterActiveInstanceBlur() {
+    return;
   },
-  prepareScopeUpdate: function (_scope: any, _instance: any): void {
-    throw new Error("Function not implemented.");
+  prepareScopeUpdate(_scope, _instance) {
+    return;
   },
-  getInstanceFromScope: function (_scopeInstance: any): VComponent | null {
-    throw new Error("Function not implemented.");
+  getInstanceFromScope(_scope) {
+    return _scope;
   },
-  detachDeletedInstance: function (_node: VComponent): void {
-    throw new Error("Function not implemented.");
+  detachDeletedInstance(node: VWidget) {
+    if (node.close) {
+      node.close();
+    }
+  },
+  clearContainer(_container) {
+    // IMPORTANT NOTE: This method is required by React Reconciler and should not be deleted.
+    return;
   }
 };
 
-export default Reconciler(HostConfig);
+export default Reconciler(hostConfig);

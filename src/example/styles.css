@@ -1,0 +1,26 @@
+#root {
+    height: '100%';
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center';
+    background-color: #344A5E;
+}
+
+#label1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #29D0C8;
+    margin-bottom: 15px;
+}
+
+#label2 {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+}
+
+#image {
+    width: '100px';
+    height: '100px';
+}

@@ -40,7 +40,7 @@ export class Renderer {
       null,
       isConcurrent,
       hydrate,
-      "vixen",
+      "",
       (_err) => {},
       null
     );
