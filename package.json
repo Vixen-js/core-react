@@ -1,9 +1,10 @@
 {
   "name": "@vixen-js/core-react",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Vixen UI Core React Package to create Desktop apps using react.js",
   "type": "module",
+  "types": "dist/main.d.ts",
   "files": [
     "dist",
     "package.json",
@@ -45,6 +46,7 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.10.0",
     "vite": "^5.4.8",
+    "vite-plugin-dts": "^4.3.0",
     "vite-plugin-externalize-dependencies": "^1.0.1"
   },
   "repository": {
