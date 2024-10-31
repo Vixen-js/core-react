@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.28.8
     version: 0.28.8
   '@vixen-js/core':
-    specifier: ^0.1.2
-    version: 0.1.2
+    specifier: ^0.1.3
+    version: 0.1.3
   react-deep-force-update:
     specifier: ^2.1.3
     version: 2.1.3
@@ -1125,8 +1125,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vixen-js/core@0.1.2:
-    resolution: {integrity: sha512-j+FR45MNFh4qOegZlUwsXqv6+qYcFvDWNkzlQBZeViPaRKhbnEvUGjX6De9CUZSeMxFbJ4tVTcd/YG5fAyOfDA==}
+  /@vixen-js/core@0.1.3:
+    resolution: {integrity: sha512-Eu/L6utVETFXHKLzBqRUc1RAz7MrtEdmvJWIvTxPaKV3iPjgCIG/XUQ9lyGB/GAGZxg2RF1+Z6fAU8Ua7SLmIA==}
     engines: {node: '>=18.12.x'}
     hasBin: true
     requiresBuild: true
