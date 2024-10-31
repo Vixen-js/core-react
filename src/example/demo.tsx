@@ -4,7 +4,6 @@ import { Window } from "../components/Window";
 import { Renderer } from "../renderer";
 import styles from "./styles.css?raw";
 
-// eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
   return (
     <Window

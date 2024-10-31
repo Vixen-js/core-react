@@ -46,7 +46,7 @@ export type WidgetEventListeners = {
 };
 export interface ViewProps<Signals extends object> extends VProps {
   visible?: boolean;
-  styleSheet?: string | CSSModuleClasses;
+  styleSheet?: string;
   style?: string;
   geometry?: Geometry;
   id?: string;
@@ -79,7 +79,7 @@ export function setViewProps<Signals extends object>(
         widget.hide();
       }
     },
-    set styleSheet(styleSheet: string | CSSModuleClasses) {
+    set styleSheet(styleSheet: string) {
       const styles =
         typeof styleSheet === "string" ? styleSheet : String(styleSheet);
       widget.setStyleSheet(styles);

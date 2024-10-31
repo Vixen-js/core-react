@@ -2,7 +2,7 @@ import rec, { appContainer } from "./reconciler";
 import ReactReconciler, { RootTag } from "react-reconciler";
 import React from "react";
 
-// @ts-expect-error expected behavior
+// @ts-ignore
 import deepForceUpdate from "react-deep-force-update";
 
 type VixenReconciler = typeof rec;
