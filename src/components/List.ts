@@ -15,7 +15,7 @@ import {
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 import { VListItem } from "./ListItem";
-import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
+import { addNewEventListener, cleanEventListener } from "../utils/helpers";
 
 export type ListProps = ViewProps & Partial<QListWidgetSignals>;
 

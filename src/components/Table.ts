@@ -11,7 +11,7 @@ import { ComponentConfig, registerComponent, VComponent } from "./Config";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 import { VTableItem } from "./TableItem";
-import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
+import { addNewEventListener, cleanEventListener } from "../utils/helpers";
 
 export interface CellRange {
   row: number;

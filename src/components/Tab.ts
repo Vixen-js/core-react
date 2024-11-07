@@ -10,7 +10,7 @@ import { ComponentConfig, registerComponent, VComponent } from "./Config";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 import { setTabItemProps, VTabItem } from "./TabItem";
-import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
+import { addNewEventListener, cleanEventListener } from "../utils/helpers";
 
 type TabSignals = ViewProps & Partial<QTabWidgetSignals>;
 export interface TabProps extends TabSignals {

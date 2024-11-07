@@ -1,7 +1,11 @@
 import { QSpinBox, QSpinBoxSignals, QWidget } from "@vixen-js/core";
 import { setViewProps, ViewProps } from "./View";
 import { ComponentConfig, registerComponent, VWidget } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
@@ -9,7 +13,10 @@ type Range = {
   minimum: number;
   maximum: number;
 };
-export interface SpinBoxProps extends ViewProps<QSpinBoxSignals> {
+
+type SpinBoxSignals = ViewProps & Partial<QSpinBoxSignals>;
+
+export interface SpinBoxProps extends SpinBoxSignals {
   prefix?: string;
   suffix?: string;
   singleStep?: number;
@@ -37,6 +44,19 @@ const setSpinBoxProps = (
     },
     set value(value: number) {
       widget.setValue(value);
+    },
+    set onValueChange(callback: (value: number) => void) {
+      cleanEventListener<keyof QSpinBoxSignals>(
+        widget,
+        "onValueChange",
+        oldProps.onValueChange,
+        callback
+      );
+      addNewEventListener<keyof QSpinBoxSignals>(
+        widget,
+        "onValueChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

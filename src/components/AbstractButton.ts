@@ -5,7 +5,7 @@ import {
   QSize
 } from "@vixen-js/core";
 import { ViewProps, setViewProps } from "./View";
-import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
+import { addNewEventListener, cleanEventListener } from "../utils/helpers";
 
 type ButtonSignals = ViewProps & Partial<QAbstractButtonSignals>;
 

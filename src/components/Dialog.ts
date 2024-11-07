@@ -16,7 +16,7 @@ import {
 } from "./Config";
 import { AppContainer, Ctx } from "../reconciler";
 import { Fiber } from "react-reconciler";
-import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
+import { addNewEventListener, cleanEventListener } from "../utils/helpers";
 
 type DialogSignals = ViewProps & Partial<QDialogSignals>;
 export interface DialogProps extends DialogSignals {
