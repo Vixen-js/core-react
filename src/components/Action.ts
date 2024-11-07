@@ -14,21 +14,20 @@ import {
   VProps
 } from "./Config";
 import {
-  addNewEventListeners,
-  cleanEventListenerMap,
+  addNewEventListener,
+  cleanEventListener,
   throwUnsupported
 } from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface ActionProps extends VProps {
+export interface ActionProps extends VProps, Partial<QActionSignals> {
   checkable?: boolean;
   checked?: boolean;
   enabled?: boolean;
   font?: QFont;
   icon?: QIcon;
   id?: string;
-  on?: Partial<QActionSignals>;
   separator?: boolean;
   shortcut?: QKeySequence;
   shortcutContext?: ShortcutContext;
@@ -59,14 +58,6 @@ const setActionProps = (
     set id(id: string) {
       widget.setObjectName(id);
     },
-    set on(listeners: Partial<QActionSignals>) {
-      const listenMap: any = { ...listeners };
-      const oldListenMap: any = { ...oldProps.on };
-      // Clean previous listeners
-      cleanEventListenerMap(widget, oldListenMap, listenMap);
-      // Add new listeners
-      addNewEventListeners(widget, listenMap);
-    },
     set separator(separator: boolean) {
       widget.setSeparator(separator);
     },
@@ -78,8 +69,51 @@ const setActionProps = (
     },
     set text(text: string) {
       widget.setText(text);
+    },
+    // Set Event Listeners
+    set onChange(callbackFn: () => void) {
+      cleanEventListener<keyof QActionSignals>(
+        widget,
+        "onChange",
+        oldProps.onChange,
+        callbackFn
+      );
+      addNewEventListener<keyof QActionSignals>(widget, "onChange", callbackFn);
+    },
+    set onTrigger(callbackFn: (checked: boolean) => void) {
+      cleanEventListener<keyof QActionSignals>(
+        widget,
+        "onTrigger",
+        oldProps.onChange,
+        callbackFn
+      );
+      addNewEventListener<keyof QActionSignals>(
+        widget,
+        "onTrigger",
+        callbackFn
+      );
+    },
+    set onHover(callbackFn: () => void) {
+      cleanEventListener<keyof QActionSignals>(
+        widget,
+        "onHover",
+        oldProps.onHover,
+        callbackFn
+      );
+      addNewEventListener<keyof QActionSignals>(widget, "onHover", callbackFn);
+    },
+    set onToggle(callbackFn: (checked: boolean) => void) {
+      cleanEventListener<keyof QActionSignals>(
+        widget,
+        "onToggle",
+        oldProps.onToggle,
+        callbackFn
+      );
+      addNewEventListener<keyof QActionSignals>(widget, "onToggle", callbackFn);
     }
+    // Finish Event Listeners Set
   };
+
   Object.assign(setter, newProps);
 };
 

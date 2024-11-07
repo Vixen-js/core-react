@@ -16,9 +16,10 @@ import {
 } from "./Config";
 import { AppContainer, Ctx } from "../reconciler";
 import { Fiber } from "react-reconciler";
+import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
 
-export interface DialogProps<T extends object = QDialogSignals>
-  extends ViewProps<T> {
+type DialogSignals = ViewProps & Partial<QDialogSignals>;
+export interface DialogProps extends DialogSignals {
   open?: boolean;
   font?: QFont;
   focus?: FocusReason;
@@ -60,6 +61,34 @@ export const setDialogProps = (
     },
     set enableSizeGrip(enableSizeGrip: boolean) {
       widget.setSizeGripEnabled(enableSizeGrip);
+    },
+    // Event Listeners
+    set onAccept(callback: () => void) {
+      cleanEventListener<keyof QDialogSignals>(
+        widget,
+        "onAccept",
+        oldProps.onAccept,
+        callback
+      );
+      addNewEventListener<keyof QDialogSignals>(widget, "onAccept", callback);
+    },
+    set onFinish(callback: (result: number) => void) {
+      cleanEventListener<keyof QDialogSignals>(
+        widget,
+        "onFinish",
+        oldProps.onFinish,
+        callback
+      );
+      addNewEventListener<keyof QDialogSignals>(widget, "onFinish", callback);
+    },
+    set onReject(callback: () => void) {
+      cleanEventListener<keyof QDialogSignals>(
+        widget,
+        "onReject",
+        oldProps.onReject,
+        callback
+      );
+      addNewEventListener<keyof QDialogSignals>(widget, "onReject", callback);
     }
   };
   Object.assign(setter, newProps);

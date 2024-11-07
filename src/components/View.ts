@@ -5,7 +5,6 @@ import {
   QIcon,
   CursorShape,
   FlexLayout,
-  QWidgetSignals,
   WidgetEventTypes,
   QLayout,
   QObjectSignals,
@@ -13,7 +12,7 @@ import {
 } from "@vixen-js/core";
 import { NativeRawPointer } from "@vixen-js/core/dist/lib/core/Component";
 import { VWidget, VProps, ComponentConfig, registerComponent } from "./Config";
-import { addNewEventListeners, cleanEventListenerMap } from "../utils/helpers";
+import { addNewEventListener, cleanEventListener } from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
@@ -41,10 +40,14 @@ type WindowFlagsMap = {
   [key: number]: boolean;
 };
 
+export type EventCallback = (event?: NativeRawPointer<"VEvent">) => void;
 export type WidgetEventListeners = {
-  [key in WidgetEventTypes]: (event?: NativeRawPointer<"VEvent">) => void;
+  [key in WidgetEventTypes]: EventCallback;
 };
-export interface ViewProps<Signals extends object> extends VProps {
+
+export type EventTypesUnion = `${WidgetEventTypes}`;
+
+export interface ViewProps extends VProps, Partial<WidgetEventListeners> {
   visible?: boolean;
   styleSheet?: string;
   style?: string;
@@ -61,17 +64,16 @@ export interface ViewProps<Signals extends object> extends VProps {
   maxSize?: Size;
   size?: VSize;
   pos?: Position;
-  on?: Partial<WidgetEventListeners | Signals>;
   attributes?: WidgetAttributesMap;
   windowFlags?: WindowFlagsMap;
 }
 
-export function setViewProps<Signals extends object>(
+export function setViewProps(
   widget: QWidget<any>,
-  newProps: ViewProps<Signals>,
-  oldProps: ViewProps<Signals>
+  newProps: ViewProps,
+  oldProps: ViewProps
 ) {
-  const setter: ViewProps<Signals> = {
+  const setter: ViewProps = {
     set visible(shouldShow: boolean) {
       if (shouldShow) {
         widget.show();
@@ -145,20 +147,6 @@ export function setViewProps<Signals extends object>(
     set pos(pos: Position) {
       widget.move(pos.x, pos.y);
     },
-    set on(listenerMap: Partial<WidgetEventListeners | Signals>) {
-      const listenMap: any = {
-        ...listenerMap
-      };
-      const oldMap: any = {
-        ...oldProps.on
-      };
-
-      // Clean previous listeners
-      cleanEventListenerMap(widget, oldMap, listenMap);
-
-      // Add new listeners
-      addNewEventListeners(widget, listenMap);
-    },
     set attributes(attributes: WidgetAttributesMap) {
       Object.entries(attributes).forEach(([key, value]) => {
         widget.setAttribute(+key, value);
@@ -170,6 +158,24 @@ export function setViewProps<Signals extends object>(
       });
     }
   };
+
+  // Event Listener Definition
+  Object.keys(WidgetEventTypes)
+    .filter((type) => type !== "None")
+    .forEach((eventType) => {
+      const evtType = eventType as Omit<EventTypesUnion, "None">;
+      Object.defineProperty(setter, evtType.toString(), {
+        set(callback: EventCallback) {
+          cleanEventListener<typeof evtType>(
+            widget,
+            evtType,
+            oldProps[evtType.toString()],
+            callback
+          );
+          addNewEventListener<typeof evtType>(widget, eventType, callback);
+        }
+      });
+    });
 
   Object.assign(setter, newProps);
 }
@@ -188,10 +194,7 @@ export class VView extends QWidget implements VWidget {
     super.setLayout(layout);
   }
 
-  setProps(
-    newProps: ViewProps<QWidgetSignals>,
-    oldProps: ViewProps<QWidgetSignals>
-  ): void {
+  setProps(newProps: ViewProps, oldProps: ViewProps): void {
     setViewProps(this, newProps, oldProps);
   }
 
@@ -237,7 +240,7 @@ class ViewConfig extends ComponentConfig {
     return false;
   }
   createInstance(
-    newProps: ViewProps<QWidgetSignals>,
+    newProps: ViewProps,
     _root: AppContainer,
     _context: any,
     _workInProgress: Fiber
@@ -248,7 +251,7 @@ class ViewConfig extends ComponentConfig {
   }
   commitMount(
     instance: VView,
-    newProps: ViewProps<QWidgetSignals>,
+    newProps: ViewProps,
     _internalInstanceHandle: any
   ): void {
     if (newProps.visible !== false) {
@@ -259,13 +262,11 @@ class ViewConfig extends ComponentConfig {
   commitUpdate(
     instance: VView,
     _updatePayload: any,
-    oldProps: ViewProps<QWidgetSignals>,
-    newProps: ViewProps<QWidgetSignals>
+    oldProps: ViewProps,
+    newProps: ViewProps
   ): void {
     instance.setProps(newProps, oldProps);
   }
 }
 
-export const View = registerComponent<ViewProps<QWidgetSignals>>(
-  new ViewConfig()
-);
+export const View = registerComponent<ViewProps>(new ViewConfig());

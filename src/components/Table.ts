@@ -11,6 +11,7 @@ import { ComponentConfig, registerComponent, VComponent } from "./Config";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 import { VTableItem } from "./TableItem";
+import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
 
 export interface CellRange {
   row: number;
@@ -39,7 +40,8 @@ interface RowSize extends Omit<CellRange, "column"> {
   width: number;
 }
 
-export interface TableProps extends ViewProps<QTableWidgetSignals> {
+type TableSignals = ViewProps & Partial<QTableWidgetSignals>;
+export interface TableProps extends TableSignals {
   cellRange: CellRange;
   horizontalHeaderItems?: HorizontalHeader[];
   horizontalHeaderLabels?: string[];
@@ -153,6 +155,104 @@ export const setTableProps = (
         verifyRanges(cellRange, { row });
         widget.hideRow(row);
       }
+    },
+    set onCellActivate(callback: (row: number, col: number) => void) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellActivate",
+        oldProps.onCellActivate,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellActivate",
+        callback
+      );
+    },
+    set onCellChange(callback: (row: number, col: number) => void) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellChange",
+        oldProps.onCellChange,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellChange",
+        callback
+      );
+    },
+    set onCellClick(callback: (row: number, col: number) => void) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellClick",
+        oldProps.onCellClick,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellClick",
+        callback
+      );
+    },
+    set onCellDblClick(callback: (row: number, col: number) => void) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellDblClick",
+        oldProps.onCellDblClick,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellDblClick",
+        callback
+      );
+    },
+    set onCellEnter(callback: (row: number, col: number) => void) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellEnter",
+        oldProps.onCellEnter,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellEnter",
+        callback
+      );
+    },
+    set onCellPress(callback: (row: number, col: number) => void) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellPress",
+        oldProps.onCellPress,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCellPress",
+        callback
+      );
+    },
+    set onCurrentCellChange(
+      callback: (
+        currentRow: number,
+        currentColumn: number,
+        previousRow: number,
+        previousColumn: number
+      ) => void
+    ) {
+      cleanEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCurrentCellChange",
+        oldProps.onCurrentCellChange,
+        callback
+      );
+      addNewEventListener<keyof QTableWidgetSignals>(
+        widget,
+        "onCurrentCellChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

@@ -9,7 +9,9 @@ import { ComponentConfig, registerComponent, VProps, VWidget } from "./Config";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export interface WindowProps extends ViewProps<QMainWindowSignals> {
+type WindowSignals = ViewProps & Partial<QMainWindowSignals>;
+
+export interface WindowProps extends WindowSignals {
   menuBar?: QMenuBar;
 }
 

@@ -13,23 +13,23 @@ export function isValidUrl(str: string) {
   }
 }
 
-export function cleanEventListenerMap(
+export function cleanEventListener<EventType>(
   widget: any,
-  oldListenMap: any,
-  listenMap: any
+  type: EventType,
+  oldCallback: any,
+  newCallback: any
 ) {
-  Object.entries(oldListenMap).forEach(([type, oldListener]) => {
-    const newListener = listenMap[type];
-    if (oldListener !== newListener) {
-      widget.removeEventListener(type, oldListener);
-    } else {
-      delete listenMap[type];
-    }
-  });
+  if (oldCallback !== newCallback) {
+    widget.removeEventListener(type, oldCallback);
+  } else {
+    delete newCallback[type];
+  }
 }
 
-export function addNewEventListeners(widget: any, listenMap: any) {
-  Object.entries(listenMap).forEach(([type, newListener]) => {
-    widget.addEventListener(type, newListener);
-  });
+export function addNewEventListener<EventType>(
+  widget: any,
+  type: EventType,
+  newCallback: any
+) {
+  widget.addEventListener(type, newCallback);
 }

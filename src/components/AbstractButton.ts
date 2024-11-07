@@ -5,6 +5,9 @@ import {
   QSize
 } from "@vixen-js/core";
 import { ViewProps, setViewProps } from "./View";
+import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
+
+type ButtonSignals = ViewProps & Partial<QAbstractButtonSignals>;
 
 /**
  * The Button component provides ability to add and manipulate native button widgets. It is based on
@@ -27,8 +30,7 @@ import { ViewProps, setViewProps } from "./View";
  * Renderer.render(<App />);
  * ```
  */
-export interface AbstractButtonProps<Signals extends QAbstractButtonSignals>
-  extends ViewProps<Signals> {
+export interface AbstractButtonProps extends ButtonSignals {
   /**
    * Alternative method of providing the button text
    */
@@ -47,12 +49,12 @@ export interface AbstractButtonProps<Signals extends QAbstractButtonSignals>
   iconSize?: QSize;
 }
 
-export function setAbstractButtonProps<Signals extends QAbstractButtonSignals>(
-  widget: QAbstractButton<Signals>,
-  newProps: AbstractButtonProps<Signals>,
-  oldProps: AbstractButtonProps<Signals>
+export function setAbstractButtonProps(
+  widget: QAbstractButton<QAbstractButtonSignals>,
+  newProps: AbstractButtonProps,
+  oldProps: AbstractButtonProps
 ) {
-  const setter: AbstractButtonProps<Signals> = {
+  const setter: AbstractButtonProps = {
     set children(childrenText: string) {
       widget.setText(childrenText);
     },
@@ -64,6 +66,58 @@ export function setAbstractButtonProps<Signals extends QAbstractButtonSignals>(
     },
     set iconSize(iconSize: QSize) {
       widget.setIconSize(iconSize);
+    },
+    set onClick(callback: (checked: boolean) => void) {
+      cleanEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onClick",
+        oldProps.onClick,
+        callback
+      );
+      addNewEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onClick",
+        callback
+      );
+    },
+    set onMousedown(callback: () => void) {
+      cleanEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onMousedown",
+        oldProps.onMousedown,
+        callback
+      );
+      addNewEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onMousedown",
+        callback
+      );
+    },
+    set onMouseup(callback: () => void) {
+      cleanEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onMouseup",
+        oldProps.onMouseup,
+        callback
+      );
+      addNewEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onMouseup",
+        callback
+      );
+    },
+    set onToggle(callback: (checked: boolean) => void) {
+      cleanEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onToggle",
+        oldProps.onToggle,
+        callback
+      );
+      addNewEventListener<keyof QAbstractButtonSignals>(
+        widget,
+        "onToggle",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

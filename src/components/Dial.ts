@@ -7,9 +7,15 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
+
+type DialSignals = ViewProps & Partial<QDialSignals>;
 
 /**
  * The Dial provides ability to add and manipulate native dial slider widgets. It is based on
@@ -27,8 +33,7 @@ import { AppContainer } from "../reconciler";
  * Renderer.render(<App />);
  * ```
  */
-
-export interface DialProps extends ViewProps<QDialSignals> {
+export interface DialProps extends DialSignals {
   notchesVisible?: boolean;
   wrapping?: boolean;
   notchTarget?: number;
@@ -48,6 +53,81 @@ const setDialProps = (
     },
     set netchTarget(target: number) {
       widget.setNotchTarget(target);
+    },
+    //Event Listeners
+    set onActionTrigger(callback: (action: number) => void) {
+      cleanEventListener<keyof QDialSignals>(
+        widget,
+        "onActionTrigger",
+        oldProps.onActionTrigger,
+        callback
+      );
+      addNewEventListener<keyof QDialSignals>(
+        widget,
+        "onActionTrigger",
+        callback
+      );
+    },
+    set onRangeChange(callback: (min: number, max: number) => void) {
+      cleanEventListener<keyof QDialSignals>(
+        widget,
+        "onRangeChange",
+        oldProps.onRangeChange,
+        callback
+      );
+      addNewEventListener<keyof QDialSignals>(
+        widget,
+        "onRangeChange",
+        callback
+      );
+    },
+    set onSliderMove(callback: (value: number) => void) {
+      cleanEventListener<keyof QDialSignals>(
+        widget,
+        "onSliderMove",
+        oldProps.onSliderMove,
+        callback
+      );
+      addNewEventListener<keyof QDialSignals>(widget, "onSliderMove", callback);
+    },
+    set onSliderPress(callback: () => void) {
+      cleanEventListener<keyof QDialSignals>(
+        widget,
+        "onSliderPress",
+        oldProps.onSliderPress,
+        callback
+      );
+      addNewEventListener<keyof QDialSignals>(
+        widget,
+        "onSliderPress",
+        callback
+      );
+    },
+    set onSliderRelease(callback: () => void) {
+      cleanEventListener<keyof QDialSignals>(
+        widget,
+        "onSliderRelease",
+        oldProps.onSliderRelease,
+        callback
+      );
+      addNewEventListener<keyof QDialSignals>(
+        widget,
+        "onSliderRelease",
+        callback
+      );
+    },
+    set onValueChange(callback: (value: number) => void) {
+      cleanEventListener<keyof QDialSignals>(
+        widget,
+        "onValueChange",
+        oldProps.onValueChange,
+        callback
+      );
+      addNewEventListener<keyof QDialSignals>(
+        widget,
+        "onValueChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

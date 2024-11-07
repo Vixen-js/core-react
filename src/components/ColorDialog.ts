@@ -12,12 +12,17 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { DialogProps, setDialogProps } from "./Dialog";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface ColorDialogProps extends DialogProps<QColorDialogSignals> {
+type ColorDialogSignals = DialogProps & Partial<QColorDialogSignals>;
+export interface ColorDialogProps extends ColorDialogSignals {
   currentColor?: QColor;
   option?: DialogOption<ColorDialogOption>;
   options?: ColorDialogOption;
@@ -37,6 +42,32 @@ const setColorDialogProps = (
     },
     set options(options: ColorDialogOption) {
       widget.setOptions(options);
+    },
+    set onColorSelect(callback: (color: QColor) => void) {
+      cleanEventListener<keyof QColorDialogSignals>(
+        widget,
+        "onColorSelect",
+        oldProps.onColorSelect,
+        callback
+      );
+      addNewEventListener<keyof QColorDialogSignals>(
+        widget,
+        "onColorSelect",
+        callback
+      );
+    },
+    set onCurrentColorChange(callback: (color: QColor) => void) {
+      cleanEventListener<keyof QColorDialogSignals>(
+        widget,
+        "onCurrentColorChange",
+        oldProps.onCurrentColorChange,
+        callback
+      );
+      addNewEventListener<keyof QColorDialogSignals>(
+        widget,
+        "onCurrentColorChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

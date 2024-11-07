@@ -7,11 +7,17 @@ import {
 } from "@vixen-js/core";
 import { setViewProps, ViewProps } from "./View";
 import { ComponentConfig, registerComponent, VWidget } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export interface SliderProps extends ViewProps<QSliderSignals> {
+type SliderSignals = ViewProps & Partial<QSliderSignals>;
+
+export interface SliderProps extends SliderSignals {
   tickInterval?: number;
   tickPosition?: TickPosition;
   orientation?: Orientation;
@@ -71,6 +77,84 @@ const setSliderProps = (
     },
     set value(value: number) {
       widget.setValue(value);
+    },
+    set onActionTrigger(callback: (action: number) => void) {
+      cleanEventListener<keyof QSliderSignals>(
+        widget,
+        "onActionTrigger",
+        oldProps.onActionTrigger,
+        callback
+      );
+      addNewEventListener<keyof QSliderSignals>(
+        widget,
+        "onActionTrigger",
+        callback
+      );
+    },
+    set onRangeChange(callback: (min: number, max: number) => void) {
+      cleanEventListener<keyof QSliderSignals>(
+        widget,
+        "onRangeChange",
+        oldProps.onRangeChange,
+        callback
+      );
+      addNewEventListener<keyof QSliderSignals>(
+        widget,
+        "onRangeChange",
+        callback
+      );
+    },
+    set onSliderMove(callback: (value: number) => void) {
+      cleanEventListener<keyof QSliderSignals>(
+        widget,
+        "onSliderMove",
+        oldProps.onSliderMove,
+        callback
+      );
+      addNewEventListener<keyof QSliderSignals>(
+        widget,
+        "onSliderMove",
+        callback
+      );
+    },
+    set onSliderPress(callback: () => void) {
+      cleanEventListener<keyof QSliderSignals>(
+        widget,
+        "onSliderPress",
+        oldProps.onSliderPress,
+        callback
+      );
+      addNewEventListener<keyof QSliderSignals>(
+        widget,
+        "onSliderPress",
+        callback
+      );
+    },
+    set onSliderRelease(callback: () => void) {
+      cleanEventListener<keyof QSliderSignals>(
+        widget,
+        "onSliderRelease",
+        oldProps.onSliderRelease,
+        callback
+      );
+      addNewEventListener<keyof QSliderSignals>(
+        widget,
+        "onSliderRelease",
+        callback
+      );
+    },
+    set onValueChange(callback: (value: number) => void) {
+      cleanEventListener<keyof QSliderSignals>(
+        widget,
+        "onValueChange",
+        oldProps.onValueChange,
+        callback
+      );
+      addNewEventListener<keyof QSliderSignals>(
+        widget,
+        "onValueChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

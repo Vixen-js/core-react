@@ -13,7 +13,11 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
@@ -27,7 +31,9 @@ export interface DialogOptions<T = Option> {
   on: boolean;
 }
 
-export interface FileDialogProps extends DialogProps<QFileDialogSignals> {
+type FileDialogSignals = DialogProps & Partial<QFileDialogSignals>;
+
+export interface FileDialogProps extends FileDialogSignals {
   defaultSuffix?: string;
   supportedSchemes?: string[];
   labelText?: FileDialogLabelText;
@@ -56,6 +62,123 @@ const setFielDialogProps = (
     },
     set options(options: Option) {
       widget.setOptions(options);
+    },
+    set onCurrentChange(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onCurrentChange",
+        oldProps.onCurrentChange,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onCurrentChange",
+        callback
+      );
+    },
+    set onCurrentUrlChange(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onCurrentUrlChange",
+        oldProps.onCurrentUrlChange,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onCurrentUrlChange",
+        callback
+      );
+    },
+    set onDirectoryEnter(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onDirectoryEnter",
+        oldProps.onDirectoryEnter,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onDirectoryEnter",
+        callback
+      );
+    },
+    set onDirectoryUrlEnter(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onDirectoryUrlEnter",
+        oldProps.onDirectoryUrlEnter,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onDirectoryUrlEnter",
+        callback
+      );
+    },
+    set onFileSelect(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onFileSelect",
+        oldProps.onFileSelect,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onFileSelect",
+        callback
+      );
+    },
+    set onFilesSelect(callback: (value: string[]) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onFilesSelect",
+        oldProps.onFilesSelect,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onFilesSelect",
+        callback
+      );
+    },
+    set onFilterSelect(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onFilterSelect",
+        oldProps.onFilterSelect,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onFilterSelect",
+        callback
+      );
+    },
+    set onUrlSelect(callback: (value: string) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onUrlSelect",
+        oldProps.onUrlSelect,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onUrlSelect",
+        callback
+      );
+    },
+    set onUrlsSelect(callback: (value: string[]) => void) {
+      cleanEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onUrlsSelect",
+        oldProps.onUrlsSelect,
+        callback
+      );
+      addNewEventListener<keyof QFileDialogSignals>(
+        widget,
+        "onUrlsSelect",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

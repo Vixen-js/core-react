@@ -16,7 +16,9 @@ import {
 import { Fiber } from "react-reconciler";
 import { AppContainer, Ctx } from "../reconciler";
 
-export interface BoxViewProps extends ViewProps<QBoxLayoutSignals> {
+type BoxViewSignals = ViewProps & Partial<QBoxLayoutSignals>;
+
+export interface BoxViewProps extends BoxViewSignals {
   direction?: Direction;
 }
 

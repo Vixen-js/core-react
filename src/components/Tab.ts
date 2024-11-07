@@ -10,8 +10,10 @@ import { ComponentConfig, registerComponent, VComponent } from "./Config";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 import { setTabItemProps, VTabItem } from "./TabItem";
+import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
 
-export interface TabProps extends ViewProps<QTabWidgetSignals> {
+type TabSignals = ViewProps & Partial<QTabWidgetSignals>;
+export interface TabProps extends TabSignals {
   tabPosition?: TabPosition;
 }
 
@@ -26,6 +28,58 @@ export const setTabProps = (
   const setter: TabProps = {
     set tabPosition(value: TabPosition) {
       widget.setTabPosition(value);
+    },
+    set onCurrentChange(callback: (index: number) => void) {
+      cleanEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onCurrentChange",
+        oldProps.onCurrentChange,
+        callback
+      );
+      addNewEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onCurrentChange",
+        callback
+      );
+    },
+    set onTabBarClick(callback: (index: number) => void) {
+      cleanEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onTabBarClick",
+        oldProps.onTabBarClick,
+        callback
+      );
+      addNewEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onTabBarClick",
+        callback
+      );
+    },
+    set onTabBarDblClick(callback: (index: number) => void) {
+      cleanEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onTabBarDblClick",
+        oldProps.onTabBarDblClick,
+        callback
+      );
+      addNewEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onTabBarDblClick",
+        callback
+      );
+    },
+    set onTabCloseRequest(callback: (index: number) => void) {
+      cleanEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onTabCloseRequest",
+        oldProps.onTabCloseRequest,
+        callback
+      );
+      addNewEventListener<keyof QTabWidgetSignals>(
+        widget,
+        "onTabCloseRequest",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

@@ -5,7 +5,8 @@ import { throwUnsupported } from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export type RadioButtonProps = AbstractButtonProps<QRadioButtonSignals>;
+export type RadioButtonProps = AbstractButtonProps &
+  Partial<QRadioButtonSignals>;
 
 const setRadioButtonProps = (
   widget: VRadioButton,
@@ -19,9 +20,6 @@ const setRadioButtonProps = (
   setAbstractButtonProps(widget, newProps, oldProps);
 };
 
-/**
- * @ignore
- */
 export class VRadioButton extends QRadioButton implements VWidget {
   static tagName = "radio-button";
   setProps(newProps: RadioButtonProps, oldProps: RadioButtonProps): void {

@@ -11,7 +11,8 @@ import { throwUnsupported } from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface ErrorPromptProps extends DialogProps<QErrorMessageSignals> {
+type ErrorPromptSignals = DialogProps & Partial<QErrorMessageSignals>;
+export interface ErrorPromptProps extends ErrorPromptSignals {
   message: string;
 }
 

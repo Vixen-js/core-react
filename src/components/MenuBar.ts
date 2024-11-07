@@ -1,4 +1,10 @@
-import { QWidget, QMenu, QMenuBar, QMenuBarSignals } from "@vixen-js/core";
+import {
+  QWidget,
+  QMenu,
+  QMenuBar,
+  QMenuBarSignals,
+  NativeElement
+} from "@vixen-js/core";
 import { setViewProps, ViewProps } from "./View";
 import {
   ComponentConfig,
@@ -7,11 +13,12 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import { cleanEventListener, throwUnsupported } from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface MenuBarProps extends ViewProps<QMenuBarSignals> {
+type MenuBarSignals = ViewProps & Partial<QMenuBarSignals>;
+export interface MenuBarProps extends MenuBarSignals {
   nativeMenuBar?: boolean;
 }
 
@@ -23,6 +30,22 @@ const setMenuBarProps = (
   const setter: MenuBarProps = {
     set nativeMenuBar(nativeMenuBar: boolean) {
       widget.setNativeMenuBar(nativeMenuBar);
+    },
+    set onHover(callback: (action: NativeElement) => void) {
+      cleanEventListener<keyof QMenuBarSignals>(
+        widget,
+        "onHover",
+        oldProps.onHover,
+        callback
+      );
+    },
+    set onTrigger(callback: (action: NativeElement) => void) {
+      cleanEventListener<keyof QMenuBarSignals>(
+        widget,
+        "onTrigger",
+        oldProps.onTrigger,
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

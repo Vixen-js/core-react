@@ -1,6 +1,7 @@
 import {
   FlexLayout,
   QListWidget,
+  QListWidgetItem,
   QListWidgetSignals,
   QWidget
 } from "@vixen-js/core";
@@ -14,15 +15,149 @@ import {
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 import { VListItem } from "./ListItem";
+import { addNewEventListener, cleanEventListener } from "src/utils/helpers";
 
-export type ListProps = ViewProps<QListWidgetSignals>;
+export type ListProps = ViewProps & Partial<QListWidgetSignals>;
 
 export const setListProps = (
   widget: VList,
   newProps: ListProps,
   oldProps: ListProps
 ) => {
-  const setter: ListProps = {};
+  const setter: ListProps = {
+    set onCurrentItemChange(
+      callback: (current: QListWidgetItem, previous: QListWidgetItem) => void
+    ) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onCurrentItemChange",
+        oldProps.onCurrentItemChange,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onCurrentItemChange",
+        callback
+      );
+    },
+    set onCurrentRowChange(callback: (currentRow: number) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onCurrentRowChange",
+        oldProps.onCurrentRowChange,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onCurrentRowChange",
+        callback
+      );
+    },
+    set onCurrentTextChange(callback: (currentText: string) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onCurrentTextChange",
+        oldProps.onCurrentTextChange,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onCurrentTextChange",
+        callback
+      );
+    },
+    set onItemActivate(callback: (item: QListWidgetItem) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemActivate",
+        oldProps.onItemActivate,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemActivate",
+        callback
+      );
+    },
+    set onItemChange(callback: (item: QListWidgetItem) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemChange",
+        oldProps.onItemChange,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemChange",
+        callback
+      );
+    },
+    set onItemClick(callback: (item: QListWidgetItem) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemClick",
+        oldProps.onItemClick,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemClick",
+        callback
+      );
+    },
+    set onItemDblClick(callback: (item: QListWidgetItem) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemDblClick",
+        oldProps.onItemDblClick,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemDblClick",
+        callback
+      );
+    },
+    set onItemEnter(callback: (item: QListWidgetItem) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemEnter",
+        oldProps.onItemEnter,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemEnter",
+        callback
+      );
+    },
+    set onItemPress(callback: (item: QListWidgetItem) => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemPress",
+        oldProps.onItemPress,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemPress",
+        callback
+      );
+    },
+    set onItemSelectionChange(callback: () => void) {
+      cleanEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemSelectionChange",
+        oldProps.onItemSelectionChange,
+        callback
+      );
+      addNewEventListener<keyof QListWidgetSignals>(
+        widget,
+        "onItemSelectionChange",
+        callback
+      );
+    }
+  };
   Object.assign(setter, newProps);
   setViewProps(widget, newProps, oldProps);
 };

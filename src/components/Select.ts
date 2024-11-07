@@ -16,7 +16,11 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer, Ctx } from "../reconciler";
 
@@ -26,7 +30,9 @@ type SelectItem = {
   userData?: QVariant;
 };
 
-export interface SelectProps extends ViewProps<QComboBoxSignals> {
+type SelectSignals = ViewProps & Partial<QComboBoxSignals>;
+
+export interface SelectProps extends SelectSignals {
   items?: SelectItem[];
   count?: number;
   iconSize?: QSize;
@@ -100,6 +106,97 @@ const setSelectProps = (
     },
     set id(id: string) {
       widget.setObjectName(id);
+    },
+    set onActivate(callback: (index: number) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onActivate",
+        oldProps.onActivate,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onActivate",
+        callback
+      );
+    },
+    set onCurrentIndexChange(callback: (index: number) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onCurrentIndexChange",
+        oldProps.onCurrentIndexChange,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onCurrentIndexChange",
+        callback
+      );
+    },
+    set onCurrentTextChange(callback: (text: string) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onCurrentTextChange",
+        oldProps.onCurrentTextChange,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onCurrentTextChange",
+        callback
+      );
+    },
+    set onEditTextChange(callback: (text: string) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onEditTextChange",
+        oldProps.onEditTextChange,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onEditTextChange",
+        callback
+      );
+    },
+    set onHighlight(callback: (index: number) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onHighlight",
+        oldProps.onHighlight,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onHighlight",
+        callback
+      );
+    },
+    set onTextActivate(callback: (text: string) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onTextActivate",
+        oldProps.onTextActivate,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onTextActivate",
+        callback
+      );
+    },
+    set onTextHighlight(callback: (text: string) => void) {
+      cleanEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onTextHighlight",
+        oldProps.onTextHighlight,
+        callback
+      );
+      addNewEventListener<keyof QComboBoxSignals>(
+        widget,
+        "onTextHighlight",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

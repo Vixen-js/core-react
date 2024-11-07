@@ -5,7 +5,11 @@ import {
 } from "@vixen-js/core";
 import { DialogProps, setDialogProps } from "./Dialog";
 import { ComponentConfig, registerComponent, VWidget } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
@@ -14,8 +18,9 @@ interface ProgressBarRange {
   min: number;
 }
 
-export interface ProgressDialogProps
-  extends DialogProps<QProgressDialogSignals> {
+type ProgreesDialogSignals = DialogProps & Partial<QProgressDialogSignals>;
+
+export interface ProgressDialogProps extends ProgreesDialogSignals {
   autoClose?: boolean;
   autoReset?: boolean;
   cancelButtonText?: string;
@@ -74,6 +79,19 @@ function setProgressDialogProps(
     },
     set value(value: number) {
       widget.setValue(value);
+    },
+    set onCancel(callback: () => void) {
+      cleanEventListener<keyof QProgressDialogSignals>(
+        widget,
+        "onCancel",
+        oldProps.onCancel,
+        callback
+      );
+      addNewEventListener<keyof QProgressDialogSignals>(
+        widget,
+        "onCancel",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);
