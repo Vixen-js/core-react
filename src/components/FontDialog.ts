@@ -14,11 +14,16 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface FontDialogProps extends DialogProps<QFontDialogSignals> {
+type FontDialogSignals = DialogProps & Partial<QFontDialogSignals>;
+export interface FontDialogProps extends FontDialogSignals {
   currentFont?: QFont;
   option?: DialogOption<FontDialogOption>;
   options?: FontDialogOption;
@@ -38,6 +43,32 @@ const setFontDialogProps = (
     },
     set options(options: FontDialogOption) {
       widget.setOptions(options);
+    },
+    set onFontSelect(callback: (font: QFont) => void) {
+      cleanEventListener<keyof QFontDialogSignals>(
+        widget,
+        "onFontSelect",
+        oldProps.onFontSelect,
+        callback
+      );
+      addNewEventListener<keyof QFontDialogSignals>(
+        widget,
+        "onFontSelect",
+        callback
+      );
+    },
+    set onCurrentFontChange(callback: (font: QFont) => void) {
+      cleanEventListener<keyof QFontDialogSignals>(
+        widget,
+        "onCurrentFontChange",
+        oldProps.onCurrentFontChange,
+        callback
+      );
+      addNewEventListener<keyof QFontDialogSignals>(
+        widget,
+        "onCurrentFontChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

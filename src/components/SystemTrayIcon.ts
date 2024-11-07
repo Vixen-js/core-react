@@ -2,8 +2,10 @@ import {
   QIcon,
   QMenu,
   QSystemTrayIcon,
+  QSystemTrayIconActivationReason,
   QSystemTrayIconSignals,
-  QWidget
+  QWidget,
+  WidgetEventTypes
 } from "@vixen-js/core";
 import {
   ComponentConfig,
@@ -11,12 +13,18 @@ import {
   VComponent,
   VProps
 } from "./Config";
-import { WidgetEventListeners } from "./View";
-import { throwUnsupported } from "../utils/helpers";
+import { EventTypesUnion, WidgetEventListeners, EventCallback } from "./View";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export interface SystemTrayIconProps extends VProps {
+export interface SystemTrayIconProps
+  extends VProps,
+    Partial<WidgetEventListeners & QSystemTrayIconSignals> {
   /**
    * Sets an icon for the system tray.
    */
@@ -26,11 +34,6 @@ export interface SystemTrayIconProps extends VProps {
    * Sets the object name (id) of the widget in Qt. Object name can be analogous to id of an element in the web world. Using the objectName of the widget one can reference it in the Qt's stylesheet much like what we do with id in the web world.
    */
   id?: string;
-
-  /**
-   * Prop to set the event listener map.
-   */
-  on?: Partial<WidgetEventListeners | QSystemTrayIconSignals>;
 
   /**
    * Sets a tooltip for the system tray.
@@ -55,26 +58,6 @@ const setSystemTrayIconProps = (
     set id(id: string) {
       widget.setObjectName(id);
     },
-    set on(
-      listenerMap: Partial<WidgetEventListeners | QSystemTrayIconSignals>
-    ) {
-      const listenerMapLatest: any = Object.assign({}, listenerMap);
-      const oldListenerMap = Object.assign({}, oldProps.on);
-      Object.entries(oldListenerMap).forEach(([eventType, oldEvtListener]) => {
-        const newEvtListener = listenerMapLatest[eventType];
-        if (oldEvtListener !== newEvtListener) {
-          widget.removeEventListener(eventType as any, oldEvtListener);
-        } else {
-          delete listenerMapLatest[eventType];
-        }
-      });
-
-      Object.entries(listenerMapLatest).forEach(
-        ([eventType, newEvtListener]) => {
-          widget.addEventListener(eventType as any, newEvtListener);
-        }
-      );
-    },
     set tooltip(tooltip: string) {
       widget.setToolTip(tooltip);
     },
@@ -84,8 +67,55 @@ const setSystemTrayIconProps = (
       } else {
         widget.hide();
       }
+    },
+    set onActivate(
+      callback: (reason: QSystemTrayIconActivationReason) => void
+    ) {
+      cleanEventListener<keyof QSystemTrayIconSignals>(
+        widget,
+        "onActivate",
+        oldProps.onActivate,
+        callback
+      );
+      addNewEventListener<keyof QSystemTrayIconSignals>(
+        widget,
+        "onActivate",
+        callback
+      );
+    },
+    set onMessageClick(callback: () => void) {
+      cleanEventListener<keyof QSystemTrayIconSignals>(
+        widget,
+        "onMessageClick",
+        oldProps.onMessageClick,
+        callback
+      );
+      addNewEventListener<keyof QSystemTrayIconSignals>(
+        widget,
+        "onMessageClick",
+        callback
+      );
     }
   };
+
+  // Event Listener Definition
+  Object.keys(WidgetEventTypes)
+    .filter((type) => type !== "None")
+    .forEach((eventType) => {
+      const evtType = eventType as Omit<EventTypesUnion, "None">;
+      Object.defineProperty(setter, evtType.toString(), {
+        set(callback: EventCallback) {
+          cleanEventListener<typeof evtType>(
+            widget,
+            evtType,
+            oldProps[evtType.toString()],
+            callback
+          );
+          addNewEventListener<typeof evtType>(widget, eventType, callback);
+        }
+      });
+    });
+
   Object.assign(setter, newProps);
 };
 

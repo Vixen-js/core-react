@@ -4,7 +4,9 @@ import { ComponentConfig, registerComponent, VWidget } from "./Config";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export interface ScrollAreaProps extends ViewProps<QScrollAreaSignals> {
+type ScrollAreaSignals = ViewProps & Partial<QScrollAreaSignals>;
+
+export interface ScrollAreaProps extends ScrollAreaSignals {
   widgetResizable?: boolean;
 }
 

@@ -10,7 +10,8 @@ import { throwUnsupported } from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export interface TextProps extends ViewProps<QLabelSignals> {
+type TextSignals = ViewProps & Partial<QLabelSignals>;
+export interface TextProps extends TextSignals {
   children?: string | number | Array<string | number>;
   wordWrap?: boolean;
   scaledContents?: boolean;

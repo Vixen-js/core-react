@@ -7,9 +7,15 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
+
+type LineEditSignals = ViewProps & Partial<QLineEditSignals>;
 
 /**
  * The LineEdit component provides ability to add and manipulate native editable text field widgets. It is based on
@@ -30,7 +36,7 @@ import { AppContainer } from "../reconciler";
  * Renderer.render(<App />);
  * ```
  */
-export interface LineEditProps extends ViewProps<QLineEditSignals> {
+export interface LineEditProps extends LineEditSignals {
   text?: string;
   placeholderText?: string;
   readOnly?: boolean;
@@ -54,6 +60,100 @@ const setLineEditProps = (
     },
     set echoMode(echoMode: EchoMode) {
       widget.setEchoMode(echoMode);
+    },
+    // Event handlers
+    set onCursorPositionChange(
+      callback: (oldPos: number, newPos: number) => void
+    ) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onCursorPositionChange",
+        oldProps.onCursorPositionChange,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onCursorPositionChange",
+        callback
+      );
+    },
+    set onEditingFinish(callback: () => void) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onEditingFinish",
+        oldProps.onEditingFinish,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onEditingFinish",
+        callback
+      );
+    },
+    set onInputReject(callback: () => void) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onInputReject",
+        oldProps.onInputReject,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onInputReject",
+        callback
+      );
+    },
+    set onReturnPress(callback: () => void) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onReturnPress",
+        oldProps.onReturnPress,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onReturnPress",
+        callback
+      );
+    },
+    set onSelectionChange(callback: () => void) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onSelectionChange",
+        oldProps.onSelectionChange,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onSelectionChange",
+        callback
+      );
+    },
+    set onTextChange(callback: (text: string) => void) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onTextChange",
+        oldProps.onTextChange,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onTextChange",
+        callback
+      );
+    },
+    set onTextEdit(callback: (text: string) => void) {
+      cleanEventListener<keyof QLineEditSignals>(
+        widget,
+        "onTextEdit",
+        oldProps.onTextEdit,
+        callback
+      );
+      addNewEventListener<keyof QLineEditSignals>(
+        widget,
+        "onTextEdit",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

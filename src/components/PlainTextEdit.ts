@@ -7,11 +7,16 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface PlainTextEditProps extends ViewProps<QPlainTextEditSignals> {
+type PlainTextEditSignals = ViewProps & Partial<QPlainTextEditSignals>;
+export interface PlainTextEditProps extends PlainTextEditSignals {
   text?: string;
   readOnly?: boolean;
   placeholder?: string;
@@ -31,6 +36,110 @@ const setPlainTextEditProps = (
     },
     set placeholder(placeholder: string) {
       widget.setPlaceholderText(placeholder);
+    },
+    set onTextChange(callback: () => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onTextChange",
+        oldProps.onTextChange,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onTextChange",
+        callback
+      );
+    },
+    set onBlockCountChange(callback: (blockCount: number) => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onBlockCountChange",
+        oldProps.onBlockCountChange,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onBlockCountChange",
+        callback
+      );
+    },
+    set onCopyAvailable(callback: (yes: boolean) => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onCopyAvailable",
+        oldProps.onCopyAvailable,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onCopyAvailable",
+        callback
+      );
+    },
+    set onCursorPositionChange(callback: () => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onCursorPositionChange",
+        oldProps.onCursorPositionChange,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onCursorPositionChange",
+        callback
+      );
+    },
+    set onModificationChange(callback: (changed: boolean) => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onModificationChange",
+        oldProps.onModificationChange,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onModificationChange",
+        callback
+      );
+    },
+    set onRedoAvailable(callback: (available: boolean) => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onRedoAvailable",
+        oldProps.onRedoAvailable,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onRedoAvailable",
+        callback
+      );
+    },
+    set onSelectionChange(callback: () => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onSelectionChange",
+        oldProps.onSelectionChange,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onSelectionChange",
+        callback
+      );
+    },
+    set onUndoAvailable(callback: (available: boolean) => void) {
+      cleanEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onUndoAvailable",
+        oldProps.onUndoAvailable,
+        callback
+      );
+      addNewEventListener<keyof QPlainTextEditSignals>(
+        widget,
+        "onUndoAvailable",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

@@ -11,6 +11,8 @@ import { throwUnsupported } from "../utils/helpers";
 import { AppContainer, Ctx } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
+type ButtonSignals = AbstractButtonProps & Partial<QPushButtonSignals>;
+
 /**
  * The Button component provides ability to add and manipulate native button widgets.
  * ## Example
@@ -30,7 +32,7 @@ import { Fiber } from "react-reconciler";
  * Renderer.render(<App />);
  * ```
  */
-export interface ButtonProps extends AbstractButtonProps<QPushButtonSignals> {
+export interface ButtonProps extends ButtonSignals {
   /**
    * Check if the button has border raised.
    */

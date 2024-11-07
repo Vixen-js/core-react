@@ -1,5 +1,5 @@
 import { QIcon } from "@vixen-js/core";
-import { Image, Text, View } from "../main";
+import { Button, Image, Text, View } from "../main";
 import { Window } from "../components/Window";
 import { Renderer } from "../renderer";
 import styles from "./styles.css?raw";

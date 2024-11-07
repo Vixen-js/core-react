@@ -12,11 +12,16 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { AppContainer } from "../reconciler";
 import { Fiber } from "react-reconciler";
 
-export interface ProgressBarProps extends ViewProps<QProgressBarSignals> {
+type ProgressBarSignals = ViewProps & Partial<QProgressBarSignals>;
+export interface ProgressBarProps extends ProgressBarSignals {
   value?: number;
   max?: number;
   min?: number;
@@ -40,6 +45,19 @@ const setProgressBarProps = (
     },
     set orientation(orientation: Orientation) {
       widget.setOrientation(orientation);
+    },
+    set onValueChange(callback: (value: number) => void) {
+      cleanEventListener<keyof QProgressBarSignals>(
+        widget,
+        "onValueChange",
+        oldProps.onValueChange,
+        callback
+      );
+      addNewEventListener<keyof QProgressBarSignals>(
+        widget,
+        "onValueChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

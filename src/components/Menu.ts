@@ -1,4 +1,4 @@
-import { Component, QMenu, QMenuSignals } from "@vixen-js/core";
+import { Component, NativeElement, QMenu, QMenuSignals } from "@vixen-js/core";
 import { setViewProps, ViewProps } from "./View";
 import {
   ComponentConfig,
@@ -8,26 +8,75 @@ import {
   VWidget
 } from "./Config";
 import { VAction } from "./Action";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface MenuProps extends ViewProps<QMenuSignals> {
+type MenuSignals = ViewProps & Partial<QMenuSignals>;
+export interface MenuProps extends MenuSignals {
   title?: string;
 }
 
 const setMenuProps = (
   widget: VMenu,
   newProps: MenuProps,
-  _oldProps: MenuProps
+  oldProps: MenuProps
 ) => {
   const setter: MenuProps = {
     set title(title: string) {
       widget.setTitle(title);
+    },
+    set onAboutToHide(callback: () => void) {
+      cleanEventListener<keyof QMenuSignals>(
+        widget,
+        "onAboutToHide",
+        oldProps.onAboutToHide,
+        callback
+      );
+      addNewEventListener<keyof QMenuSignals>(
+        widget,
+        "onAboutToHide",
+        callback
+      );
+    },
+    set onAboutToShow(callback: () => void) {
+      cleanEventListener<keyof QMenuSignals>(
+        widget,
+        "onAboutToShow",
+        oldProps.onAboutToShow,
+        callback
+      );
+      addNewEventListener<keyof QMenuSignals>(
+        widget,
+        "onAboutToShow",
+        callback
+      );
+    },
+    set onHover(callback: (action: NativeElement) => void) {
+      cleanEventListener<keyof QMenuSignals>(
+        widget,
+        "onHover",
+        oldProps.onHover,
+        callback
+      );
+      addNewEventListener<keyof QMenuSignals>(widget, "onHover", callback);
+    },
+    set onTrigger(callback: (action: NativeElement) => void) {
+      cleanEventListener<keyof QMenuSignals>(
+        widget,
+        "onTrigger",
+        oldProps.onTrigger,
+        callback
+      );
+      addNewEventListener<keyof QMenuSignals>(widget, "onTrigger", callback);
     }
   };
   Object.assign(setter, newProps);
-  setViewProps(widget, newProps, _oldProps);
+  setViewProps(widget, newProps, oldProps);
 };
 
 export class VMenu extends QMenu implements VWidget {

@@ -7,10 +7,15 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
+type CheckboxSignals = AbstractButtonProps & Partial<QCheckBoxSignals>;
 /**
  * The Checkbox component provides ability to add and manipulate native button widgets.
  * ## Example
@@ -30,7 +35,7 @@ import { AppContainer } from "../reconciler";
  * Renderer.render(<App />);
  * ```
  */
-export interface CheckboxProps extends AbstractButtonProps<QCheckBoxSignals> {
+export interface CheckboxProps extends CheckboxSignals {
   checked?: boolean;
 }
 
@@ -42,6 +47,19 @@ const setCheckboxProps = (
   const setter: CheckboxProps = {
     set checked(checked: boolean) {
       widget.setChecked(checked);
+    },
+    set onStateChange(callbackFn: (state: number) => void) {
+      cleanEventListener<keyof QCheckBoxSignals>(
+        widget,
+        "onStateChange",
+        oldProps.onStateChange,
+        callbackFn
+      );
+      addNewEventListener<keyof QCheckBoxSignals>(
+        widget,
+        "onStateChange",
+        callbackFn
+      );
     }
   };
   Object.assign(setter, newProps);

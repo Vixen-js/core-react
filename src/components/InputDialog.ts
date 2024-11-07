@@ -14,11 +14,16 @@ import {
   VProps,
   VWidget
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface InputDialogProps extends DialogProps<QInputDialogSignals> {
+type InputDialogSignals = DialogProps & Partial<QInputDialogSignals>;
+export interface InputDialogProps extends InputDialogSignals {
   cancelButtonText?: string;
   selectEditable?: boolean;
   doubleDecimals?: number;
@@ -90,6 +95,84 @@ const setInputDialogProps = (
     },
     set textValue(text: string) {
       widget.setTextValue(text);
+    },
+    set onDoubleValueChange(callback: (value: number) => void) {
+      cleanEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onDoubleValueChange",
+        oldProps.onDoubleValueChange,
+        callback
+      );
+      addNewEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onDoubleValueChange",
+        callback
+      );
+    },
+    set onDoubleValueSelect(callback: (value: number) => void) {
+      cleanEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onDoubleValueSelect",
+        oldProps.onDoubleValueSelect,
+        callback
+      );
+      addNewEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onDoubleValueSelect",
+        callback
+      );
+    },
+    set onIntValueChange(callback: (value: number) => void) {
+      cleanEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onIntValueChange",
+        oldProps.onIntValueChange,
+        callback
+      );
+      addNewEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onIntValueChange",
+        callback
+      );
+    },
+    set onIntValueSelect(callback: (value: number) => void) {
+      cleanEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onIntValueSelect",
+        oldProps.onIntValueSelect,
+        callback
+      );
+      addNewEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onIntValueSelect",
+        callback
+      );
+    },
+    set onTextValueChange(callback: (text: string) => void) {
+      cleanEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onTextValueChange",
+        oldProps.onTextValueChange,
+        callback
+      );
+      addNewEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onTextValueChange",
+        callback
+      );
+    },
+    set onTextValueSelect(callback: (text: string) => void) {
+      cleanEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onTextValueSelect",
+        oldProps.onTextValueSelect,
+        callback
+      );
+      addNewEventListener<keyof QInputDialogSignals>(
+        widget,
+        "onTextValueSelect",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);

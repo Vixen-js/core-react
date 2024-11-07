@@ -1,6 +1,7 @@
 import {
   DayOfWeek,
   QCalendarWidgetSignals,
+  QDate,
   QFont,
   QWidget
 } from "@vixen-js/core";
@@ -17,11 +18,16 @@ import {
   VComponent,
   VProps
 } from "./Config";
-import { throwUnsupported } from "../utils/helpers";
+import {
+  addNewEventListener,
+  cleanEventListener,
+  throwUnsupported
+} from "../utils/helpers";
 import { Fiber } from "react-reconciler";
 import { AppContainer } from "../reconciler";
 
-export interface CalendarProps extends ViewProps<QCalendarWidgetSignals> {
+type CalendarSignals = ViewProps & Partial<QCalendarWidgetSignals>;
+export interface CalendarProps extends CalendarSignals {
   dateEditAcceptDelay?: number;
   dateEditEnabled?: boolean;
   gridVisible?: boolean;
@@ -68,6 +74,58 @@ const setCalendarProps = (
     },
     set selectionMode(mode: SelectionMode) {
       widget.setSelectionMode(mode);
+    },
+    set onActivate(callback: (date: QDate) => void) {
+      cleanEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onActivate",
+        oldProps.onActivate,
+        callback
+      );
+      addNewEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onActivate",
+        callback
+      );
+    },
+    set onClick(callback: (date: QDate) => void) {
+      cleanEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onClick",
+        oldProps.onClick,
+        callback
+      );
+      addNewEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onClick",
+        callback
+      );
+    },
+    set onCurrentPageChange(callback: (year: number, month: number) => void) {
+      cleanEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onCurrentPageChange",
+        oldProps.onCurrentPageChange,
+        callback
+      );
+      addNewEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onCurrentPageChange",
+        callback
+      );
+    },
+    set onSelectionChange(callback: () => void) {
+      cleanEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onSelectionChange",
+        oldProps.onSelectionChange,
+        callback
+      );
+      addNewEventListener<keyof QCalendarWidgetSignals>(
+        widget,
+        "onSelectionChange",
+        callback
+      );
     }
   };
   Object.assign(setter, newProps);
