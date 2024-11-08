@@ -17,12 +17,12 @@ export function cleanEventListener<EventType>(
   widget: any,
   type: EventType,
   oldCallback: any,
-  newCallback: any
+  newProps: any
 ) {
-  if (oldCallback !== newCallback) {
+  if (oldCallback !== newProps[type]) {
     widget.removeEventListener(type, oldCallback);
   } else {
-    delete newCallback[type];
+    delete newProps[type];
   }
 }
 

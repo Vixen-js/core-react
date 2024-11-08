@@ -1,7 +1,7 @@
 {
   "name": "@vixen-js/core-react",
   "private": false,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Vixen UI Core React Package to create Desktop apps using react.js",
   "type": "module",
   "types": "dist/main.d.ts",

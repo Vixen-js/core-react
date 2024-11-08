@@ -170,7 +170,7 @@ export function setViewProps(
             widget,
             evtType,
             oldProps[evtType.toString()],
-            callback
+            newProps
           );
           addNewEventListener<typeof evtType>(widget, eventType, callback);
         }
