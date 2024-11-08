@@ -69,7 +69,7 @@ const setLineEditProps = (
         widget,
         "onCursorPositionChange",
         oldProps.onCursorPositionChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,
@@ -82,7 +82,7 @@ const setLineEditProps = (
         widget,
         "onEditingFinish",
         oldProps.onEditingFinish,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,
@@ -95,7 +95,7 @@ const setLineEditProps = (
         widget,
         "onInputReject",
         oldProps.onInputReject,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,
@@ -108,7 +108,7 @@ const setLineEditProps = (
         widget,
         "onReturnPress",
         oldProps.onReturnPress,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,
@@ -121,7 +121,7 @@ const setLineEditProps = (
         widget,
         "onSelectionChange",
         oldProps.onSelectionChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,
@@ -134,7 +134,7 @@ const setLineEditProps = (
         widget,
         "onTextChange",
         oldProps.onTextChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,
@@ -147,7 +147,7 @@ const setLineEditProps = (
         widget,
         "onTextEdit",
         oldProps.onTextEdit,
-        callback
+        newProps
       );
       addNewEventListener<keyof QLineEditSignals>(
         widget,

@@ -19,6 +19,8 @@ export function cleanEventListener<EventType>(
   oldCallback: any,
   newProps: any
 ) {
+  if (oldCallback === undefined) return;
+
   if (oldCallback !== newProps[type]) {
     widget.removeEventListener(type, oldCallback);
   } else {
@@ -31,5 +33,7 @@ export function addNewEventListener<EventType>(
   type: EventType,
   newCallback: any
 ) {
-  widget.addEventListener(type, newCallback);
+  if (newCallback !== undefined) {
+    widget.addEventListener(type, newCallback);
+  }
 }

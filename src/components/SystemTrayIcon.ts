@@ -75,7 +75,7 @@ const setSystemTrayIconProps = (
         widget,
         "onActivate",
         oldProps.onActivate,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSystemTrayIconSignals>(
         widget,
@@ -88,7 +88,7 @@ const setSystemTrayIconProps = (
         widget,
         "onMessageClick",
         oldProps.onMessageClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSystemTrayIconSignals>(
         widget,

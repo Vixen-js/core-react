@@ -136,7 +136,7 @@ class ImageConfig extends ComponentConfig {
     const widget = new VImage();
     widget.setProperty("scaledContents", true);
     widget.setProps(props, {});
-    widget.addEventListener(WidgetEventTypes.onResize, () => {
+    widget.addEventListener(WidgetEventTypes.OnResize, () => {
       widget.scalePixmap(widget.size());
     });
     return widget;

@@ -161,7 +161,7 @@ export const setTableProps = (
         widget,
         "onCellActivate",
         oldProps.onCellActivate,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,
@@ -174,7 +174,7 @@ export const setTableProps = (
         widget,
         "onCellChange",
         oldProps.onCellChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,
@@ -187,7 +187,7 @@ export const setTableProps = (
         widget,
         "onCellClick",
         oldProps.onCellClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,
@@ -200,7 +200,7 @@ export const setTableProps = (
         widget,
         "onCellDblClick",
         oldProps.onCellDblClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,
@@ -213,7 +213,7 @@ export const setTableProps = (
         widget,
         "onCellEnter",
         oldProps.onCellEnter,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,
@@ -226,7 +226,7 @@ export const setTableProps = (
         widget,
         "onCellPress",
         oldProps.onCellPress,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,
@@ -246,7 +246,7 @@ export const setTableProps = (
         widget,
         "onCurrentCellChange",
         oldProps.onCurrentCellChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTableWidgetSignals>(
         widget,

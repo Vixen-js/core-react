@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.28.8
     version: 0.28.8
   '@vixen-js/core':
-    specifier: ^0.3.2
-    version: 0.3.2
+    specifier: ^0.3.3
+    version: 0.3.3
   react-deep-force-update:
     specifier: ^2.1.3
     version: 2.1.3
@@ -634,8 +634,8 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@vixen-js/core@0.3.2:
-    resolution: {integrity: sha512-QK41cXWvfG15vR5gZwrvBZCCIu5jwQaZzZPUvdS9/aZoookoFvSA+sAAyAYSbCsabk+NkJOZiS793qgqhI0hOA==}
+  /@vixen-js/core@0.3.3:
+    resolution: {integrity: sha512-QB88PoIkvUi1hjPAarzqPwZapmiVPwoAO4jTWcsid6QiukEI182JLsI9VZW9Hvt65sUD8GisGY7Qt8wHnMfH0w==}
     engines: {node: '>=18.12.x'}
     hasBin: true
     requiresBuild: true

@@ -49,7 +49,7 @@ const setFontDialogProps = (
         widget,
         "onFontSelect",
         oldProps.onFontSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFontDialogSignals>(
         widget,
@@ -62,7 +62,7 @@ const setFontDialogProps = (
         widget,
         "onCurrentFontChange",
         oldProps.onCurrentFontChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFontDialogSignals>(
         widget,

@@ -48,7 +48,7 @@ const setColorDialogProps = (
         widget,
         "onColorSelect",
         oldProps.onColorSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QColorDialogSignals>(
         widget,
@@ -61,7 +61,7 @@ const setColorDialogProps = (
         widget,
         "onCurrentColorChange",
         oldProps.onCurrentColorChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QColorDialogSignals>(
         widget,

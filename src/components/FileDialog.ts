@@ -68,7 +68,7 @@ const setFielDialogProps = (
         widget,
         "onCurrentChange",
         oldProps.onCurrentChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -81,7 +81,7 @@ const setFielDialogProps = (
         widget,
         "onCurrentUrlChange",
         oldProps.onCurrentUrlChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -94,7 +94,7 @@ const setFielDialogProps = (
         widget,
         "onDirectoryEnter",
         oldProps.onDirectoryEnter,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -107,7 +107,7 @@ const setFielDialogProps = (
         widget,
         "onDirectoryUrlEnter",
         oldProps.onDirectoryUrlEnter,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -120,7 +120,7 @@ const setFielDialogProps = (
         widget,
         "onFileSelect",
         oldProps.onFileSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -133,7 +133,7 @@ const setFielDialogProps = (
         widget,
         "onFilesSelect",
         oldProps.onFilesSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -146,7 +146,7 @@ const setFielDialogProps = (
         widget,
         "onFilterSelect",
         oldProps.onFilterSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -159,7 +159,7 @@ const setFielDialogProps = (
         widget,
         "onUrlSelect",
         oldProps.onUrlSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,
@@ -172,7 +172,7 @@ const setFielDialogProps = (
         widget,
         "onUrlsSelect",
         oldProps.onUrlsSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QFileDialogSignals>(
         widget,

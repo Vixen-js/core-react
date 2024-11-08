@@ -32,7 +32,7 @@ export const setListProps = (
         widget,
         "onCurrentItemChange",
         oldProps.onCurrentItemChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -45,7 +45,7 @@ export const setListProps = (
         widget,
         "onCurrentRowChange",
         oldProps.onCurrentRowChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -58,7 +58,7 @@ export const setListProps = (
         widget,
         "onCurrentTextChange",
         oldProps.onCurrentTextChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -71,7 +71,7 @@ export const setListProps = (
         widget,
         "onItemActivate",
         oldProps.onItemActivate,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -84,7 +84,7 @@ export const setListProps = (
         widget,
         "onItemChange",
         oldProps.onItemChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -97,7 +97,7 @@ export const setListProps = (
         widget,
         "onItemClick",
         oldProps.onItemClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -110,7 +110,7 @@ export const setListProps = (
         widget,
         "onItemDblClick",
         oldProps.onItemDblClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -123,7 +123,7 @@ export const setListProps = (
         widget,
         "onItemEnter",
         oldProps.onItemEnter,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -136,7 +136,7 @@ export const setListProps = (
         widget,
         "onItemPress",
         oldProps.onItemPress,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,
@@ -149,7 +149,7 @@ export const setListProps = (
         widget,
         "onItemSelectionChange",
         oldProps.onItemSelectionChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QListWidgetSignals>(
         widget,

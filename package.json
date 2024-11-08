@@ -1,7 +1,7 @@
 {
   "name": "@vixen-js/core-react",
   "private": false,
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Vixen UI Core React Package to create Desktop apps using react.js",
   "type": "module",
   "types": "dist/main.d.ts",
@@ -23,7 +23,7 @@
     "prepublishOnly": "pnpm build && pnpm build:types"
   },
   "peerDependencies": {
-    "@vixen-js/core": "^0.3.2",
+    "@vixen-js/core": "^0.3.3",
     "react": "^18.3.1"
   },
   "dependencies": {

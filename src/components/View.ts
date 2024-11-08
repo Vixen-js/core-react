@@ -164,17 +164,17 @@ export function setViewProps(
     .filter((type) => type !== "None")
     .forEach((eventType) => {
       const evtType = eventType as Omit<EventTypesUnion, "None">;
-      Object.defineProperty(setter, evtType.toString(), {
-        set(callback: EventCallback) {
-          cleanEventListener<typeof evtType>(
-            widget,
-            evtType,
-            oldProps[evtType.toString()],
-            newProps
-          );
-          addNewEventListener<typeof evtType>(widget, eventType, callback);
-        }
-      });
+      cleanEventListener<typeof evtType>(
+        widget,
+        evtType,
+        oldProps[evtType.toString()],
+        newProps
+      );
+      addNewEventListener<typeof evtType>(
+        widget,
+        eventType,
+        newProps[evtType.toString()]
+      );
     });
 
   Object.assign(setter, newProps);

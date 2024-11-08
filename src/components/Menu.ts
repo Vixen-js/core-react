@@ -35,7 +35,7 @@ const setMenuProps = (
         widget,
         "onAboutToHide",
         oldProps.onAboutToHide,
-        callback
+        newProps
       );
       addNewEventListener<keyof QMenuSignals>(
         widget,
@@ -48,7 +48,7 @@ const setMenuProps = (
         widget,
         "onAboutToShow",
         oldProps.onAboutToShow,
-        callback
+        newProps
       );
       addNewEventListener<keyof QMenuSignals>(
         widget,
@@ -61,7 +61,7 @@ const setMenuProps = (
         widget,
         "onHover",
         oldProps.onHover,
-        callback
+        newProps
       );
       addNewEventListener<keyof QMenuSignals>(widget, "onHover", callback);
     },
@@ -70,7 +70,7 @@ const setMenuProps = (
         widget,
         "onTrigger",
         oldProps.onTrigger,
-        callback
+        newProps
       );
       addNewEventListener<keyof QMenuSignals>(widget, "onTrigger", callback);
     }

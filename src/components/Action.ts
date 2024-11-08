@@ -76,40 +76,56 @@ const setActionProps = (
         widget,
         "onChange",
         oldProps.onChange,
-        callbackFn
+        newProps
       );
-      addNewEventListener<keyof QActionSignals>(widget, "onChange", callbackFn);
+      if (oldProps.onChange !== newProps.onChange)
+        addNewEventListener<keyof QActionSignals>(
+          widget,
+          "onChange",
+          callbackFn
+        );
     },
     set onTrigger(callbackFn: (checked: boolean) => void) {
       cleanEventListener<keyof QActionSignals>(
         widget,
         "onTrigger",
         oldProps.onChange,
-        callbackFn
+        newProps
       );
-      addNewEventListener<keyof QActionSignals>(
-        widget,
-        "onTrigger",
-        callbackFn
-      );
+      if (oldProps.onTrigger !== newProps.onTrigger)
+        addNewEventListener<keyof QActionSignals>(
+          widget,
+          "onTrigger",
+          callbackFn
+        );
     },
     set onHover(callbackFn: () => void) {
       cleanEventListener<keyof QActionSignals>(
         widget,
         "onHover",
         oldProps.onHover,
-        callbackFn
+        newProps
       );
-      addNewEventListener<keyof QActionSignals>(widget, "onHover", callbackFn);
+      if (oldProps.onHover !== newProps.onHover)
+        addNewEventListener<keyof QActionSignals>(
+          widget,
+          "onHover",
+          callbackFn
+        );
     },
     set onToggle(callbackFn: (checked: boolean) => void) {
       cleanEventListener<keyof QActionSignals>(
         widget,
         "onToggle",
         oldProps.onToggle,
-        callbackFn
+        newProps
       );
-      addNewEventListener<keyof QActionSignals>(widget, "onToggle", callbackFn);
+      if (oldProps.onToggle !== newProps.onToggle)
+        addNewEventListener<keyof QActionSignals>(
+          widget,
+          "onToggle",
+          callbackFn
+        );
     }
     // Finish Event Listeners Set
   };

@@ -101,7 +101,7 @@ const setInputDialogProps = (
         widget,
         "onDoubleValueChange",
         oldProps.onDoubleValueChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QInputDialogSignals>(
         widget,
@@ -114,7 +114,7 @@ const setInputDialogProps = (
         widget,
         "onDoubleValueSelect",
         oldProps.onDoubleValueSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QInputDialogSignals>(
         widget,
@@ -127,7 +127,7 @@ const setInputDialogProps = (
         widget,
         "onIntValueChange",
         oldProps.onIntValueChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QInputDialogSignals>(
         widget,
@@ -140,7 +140,7 @@ const setInputDialogProps = (
         widget,
         "onIntValueSelect",
         oldProps.onIntValueSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QInputDialogSignals>(
         widget,
@@ -153,7 +153,7 @@ const setInputDialogProps = (
         widget,
         "onTextValueChange",
         oldProps.onTextValueChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QInputDialogSignals>(
         widget,
@@ -166,7 +166,7 @@ const setInputDialogProps = (
         widget,
         "onTextValueSelect",
         oldProps.onTextValueSelect,
-        callback
+        newProps
       );
       addNewEventListener<keyof QInputDialogSignals>(
         widget,

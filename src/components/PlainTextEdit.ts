@@ -42,7 +42,7 @@ const setPlainTextEditProps = (
         widget,
         "onTextChange",
         oldProps.onTextChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -55,7 +55,7 @@ const setPlainTextEditProps = (
         widget,
         "onBlockCountChange",
         oldProps.onBlockCountChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -68,7 +68,7 @@ const setPlainTextEditProps = (
         widget,
         "onCopyAvailable",
         oldProps.onCopyAvailable,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -81,7 +81,7 @@ const setPlainTextEditProps = (
         widget,
         "onCursorPositionChange",
         oldProps.onCursorPositionChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -94,7 +94,7 @@ const setPlainTextEditProps = (
         widget,
         "onModificationChange",
         oldProps.onModificationChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -107,7 +107,7 @@ const setPlainTextEditProps = (
         widget,
         "onRedoAvailable",
         oldProps.onRedoAvailable,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -120,7 +120,7 @@ const setPlainTextEditProps = (
         widget,
         "onSelectionChange",
         oldProps.onSelectionChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,
@@ -133,7 +133,7 @@ const setPlainTextEditProps = (
         widget,
         "onUndoAvailable",
         oldProps.onUndoAvailable,
-        callback
+        newProps
       );
       addNewEventListener<keyof QPlainTextEditSignals>(
         widget,

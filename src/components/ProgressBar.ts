@@ -51,7 +51,7 @@ const setProgressBarProps = (
         widget,
         "onValueChange",
         oldProps.onValueChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QProgressBarSignals>(
         widget,

@@ -83,7 +83,7 @@ const setSliderProps = (
         widget,
         "onActionTrigger",
         oldProps.onActionTrigger,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSliderSignals>(
         widget,
@@ -96,7 +96,7 @@ const setSliderProps = (
         widget,
         "onRangeChange",
         oldProps.onRangeChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSliderSignals>(
         widget,
@@ -109,7 +109,7 @@ const setSliderProps = (
         widget,
         "onSliderMove",
         oldProps.onSliderMove,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSliderSignals>(
         widget,
@@ -122,7 +122,7 @@ const setSliderProps = (
         widget,
         "onSliderPress",
         oldProps.onSliderPress,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSliderSignals>(
         widget,
@@ -135,7 +135,7 @@ const setSliderProps = (
         widget,
         "onSliderRelease",
         oldProps.onSliderRelease,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSliderSignals>(
         widget,
@@ -148,7 +148,7 @@ const setSliderProps = (
         widget,
         "onValueChange",
         oldProps.onValueChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QSliderSignals>(
         widget,

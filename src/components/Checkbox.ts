@@ -53,7 +53,7 @@ const setCheckboxProps = (
         widget,
         "onStateChange",
         oldProps.onStateChange,
-        callbackFn
+        newProps
       );
       addNewEventListener<keyof QCheckBoxSignals>(
         widget,

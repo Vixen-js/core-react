@@ -60,7 +60,7 @@ const setDialProps = (
         widget,
         "onActionTrigger",
         oldProps.onActionTrigger,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialSignals>(
         widget,
@@ -73,7 +73,7 @@ const setDialProps = (
         widget,
         "onRangeChange",
         oldProps.onRangeChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialSignals>(
         widget,
@@ -86,7 +86,7 @@ const setDialProps = (
         widget,
         "onSliderMove",
         oldProps.onSliderMove,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialSignals>(widget, "onSliderMove", callback);
     },
@@ -95,7 +95,7 @@ const setDialProps = (
         widget,
         "onSliderPress",
         oldProps.onSliderPress,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialSignals>(
         widget,
@@ -108,7 +108,7 @@ const setDialProps = (
         widget,
         "onSliderRelease",
         oldProps.onSliderRelease,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialSignals>(
         widget,
@@ -121,7 +121,7 @@ const setDialProps = (
         widget,
         "onValueChange",
         oldProps.onValueChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialSignals>(
         widget,

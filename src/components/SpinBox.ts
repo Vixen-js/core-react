@@ -50,13 +50,14 @@ const setSpinBoxProps = (
         widget,
         "onValueChange",
         oldProps.onValueChange,
-        callback
+        newProps
       );
-      addNewEventListener<keyof QSpinBoxSignals>(
-        widget,
-        "onValueChange",
-        callback
-      );
+      if (oldProps.onValueChange !== newProps.onValueChange)
+        addNewEventListener<keyof QSpinBoxSignals>(
+          widget,
+          "onValueChange",
+          callback
+        );
     }
   };
   Object.assign(setter, newProps);

@@ -80,7 +80,7 @@ const setCalendarProps = (
         widget,
         "onActivate",
         oldProps.onActivate,
-        callback
+        newProps
       );
       addNewEventListener<keyof QCalendarWidgetSignals>(
         widget,
@@ -93,7 +93,7 @@ const setCalendarProps = (
         widget,
         "onClick",
         oldProps.onClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QCalendarWidgetSignals>(
         widget,
@@ -106,7 +106,7 @@ const setCalendarProps = (
         widget,
         "onCurrentPageChange",
         oldProps.onCurrentPageChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QCalendarWidgetSignals>(
         widget,
@@ -119,7 +119,7 @@ const setCalendarProps = (
         widget,
         "onSelectionChange",
         oldProps.onSelectionChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QCalendarWidgetSignals>(
         widget,

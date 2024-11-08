@@ -68,7 +68,7 @@ export const setDialogProps = (
         widget,
         "onAccept",
         oldProps.onAccept,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialogSignals>(widget, "onAccept", callback);
     },
@@ -77,7 +77,7 @@ export const setDialogProps = (
         widget,
         "onFinish",
         oldProps.onFinish,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialogSignals>(widget, "onFinish", callback);
     },
@@ -86,7 +86,7 @@ export const setDialogProps = (
         widget,
         "onReject",
         oldProps.onReject,
-        callback
+        newProps
       );
       addNewEventListener<keyof QDialogSignals>(widget, "onReject", callback);
     }

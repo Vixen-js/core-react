@@ -112,7 +112,7 @@ const setSelectProps = (
         widget,
         "onActivate",
         oldProps.onActivate,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,
@@ -125,7 +125,7 @@ const setSelectProps = (
         widget,
         "onCurrentIndexChange",
         oldProps.onCurrentIndexChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,
@@ -138,7 +138,7 @@ const setSelectProps = (
         widget,
         "onCurrentTextChange",
         oldProps.onCurrentTextChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,
@@ -151,7 +151,7 @@ const setSelectProps = (
         widget,
         "onEditTextChange",
         oldProps.onEditTextChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,
@@ -164,7 +164,7 @@ const setSelectProps = (
         widget,
         "onHighlight",
         oldProps.onHighlight,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,
@@ -177,7 +177,7 @@ const setSelectProps = (
         widget,
         "onTextActivate",
         oldProps.onTextActivate,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,
@@ -190,7 +190,7 @@ const setSelectProps = (
         widget,
         "onTextHighlight",
         oldProps.onTextHighlight,
-        callback
+        newProps
       );
       addNewEventListener<keyof QComboBoxSignals>(
         widget,

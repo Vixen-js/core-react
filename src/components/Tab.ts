@@ -34,7 +34,7 @@ export const setTabProps = (
         widget,
         "onCurrentChange",
         oldProps.onCurrentChange,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTabWidgetSignals>(
         widget,
@@ -47,7 +47,7 @@ export const setTabProps = (
         widget,
         "onTabBarClick",
         oldProps.onTabBarClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTabWidgetSignals>(
         widget,
@@ -60,7 +60,7 @@ export const setTabProps = (
         widget,
         "onTabBarDblClick",
         oldProps.onTabBarDblClick,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTabWidgetSignals>(
         widget,
@@ -73,7 +73,7 @@ export const setTabProps = (
         widget,
         "onTabCloseRequest",
         oldProps.onTabCloseRequest,
-        callback
+        newProps
       );
       addNewEventListener<keyof QTabWidgetSignals>(
         widget,

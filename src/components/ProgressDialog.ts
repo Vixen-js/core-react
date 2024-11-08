@@ -85,7 +85,7 @@ function setProgressDialogProps(
         widget,
         "onCancel",
         oldProps.onCancel,
-        callback
+        newProps
       );
       addNewEventListener<keyof QProgressDialogSignals>(
         widget,

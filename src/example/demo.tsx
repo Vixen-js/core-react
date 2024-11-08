@@ -1,10 +1,14 @@
-import { QIcon } from "@vixen-js/core";
+import { QIcon, QKeyEvent } from "@vixen-js/core";
 import { Button, Image, Text, View } from "../main";
 import { Window } from "../components/Window";
 import { Renderer } from "../renderer";
 import styles from "./styles.css?raw";
 
 const App = () => {
+  const handleClick = () => {
+    console.log("Clicked");
+  };
+
   return (
     <Window
       styleSheet={styles}
@@ -27,6 +31,7 @@ const App = () => {
         <Text id="label2">
           Yey... You have your first Vixen UI React Application working...
         </Text>
+        <Button id="button" text="Click Me" onClick={handleClick} />
       </View>
     </Window>
   );
